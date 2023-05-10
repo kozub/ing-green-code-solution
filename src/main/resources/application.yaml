@@ -1,0 +1,12 @@
+quarkus:
+  openapi-generator:
+    codegen:
+      spec:
+        transactions_json:
+
+          base-package: io.github.kozub.inggreencode.generated
+          type-mappings:
+            Float: java.math.BigDecimal
+  http:
+    limits:
+      max-body-size: 20M
