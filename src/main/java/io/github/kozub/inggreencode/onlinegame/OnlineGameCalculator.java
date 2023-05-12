@@ -9,6 +9,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Integer.compare;
+
 @ApplicationScoped
 public class OnlineGameCalculator {
     public List<List<Clan>> calculate(Players players) {
@@ -19,7 +21,7 @@ public class OnlineGameCalculator {
         List<List<Clan>> result = new ArrayList<>();
         List<Clan> currentGroup = new ArrayList<>();
         List<Clan> skippedClans = new ArrayList<>();
-        Integer currentGroupCount = 0;
+        int currentGroupCount = 0;
 
         for (int i = 0; i < clans.size(); i++) {
             Clan clan = clans.get(i);
@@ -53,8 +55,8 @@ public class OnlineGameCalculator {
     private List<Clan> sortedCopy(List<Clan> currentGroup) {
         return currentGroup.stream()
                 .sorted((c1,c2) -> {
-                    int pointsCompare = c2.getPoints().compareTo(c1.getPoints());
-                    return pointsCompare != 0 ? pointsCompare : c1.getNumberOfPlayers().compareTo(c2.getNumberOfPlayers());
+                    int pointsCompare = compare(c2.getPoints(), c1.getPoints());
+                    return pointsCompare != 0 ? pointsCompare : compare(c1.getNumberOfPlayers(), c2.getNumberOfPlayers());
                 })
                 .toList();
     }

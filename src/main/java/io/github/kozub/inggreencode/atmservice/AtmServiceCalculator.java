@@ -4,6 +4,7 @@ import io.github.kozub.inggreencode.generated.model.ATM;
 import io.github.kozub.inggreencode.generated.model.Task;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,6 +21,7 @@ class AtmServiceCalculator {
                 .collect(groupingBy(Task::getRegion)).values().stream()
                 .flatMap(this::sortByPriorityAndRemoveDuplicates)
                 .map(AtmServiceCalculator::toATM)
+                .sorted(Comparator.comparing(ATM::getRegion))
                 .toList();
     }
 

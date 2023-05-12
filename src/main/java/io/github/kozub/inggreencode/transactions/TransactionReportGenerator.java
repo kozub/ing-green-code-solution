@@ -7,44 +7,51 @@ import io.github.kozub.inggreencode.generated.model.Transaction;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static java.util.Arrays.asList;
+import static java.util.Arrays.sort;
 
 @ApplicationScoped
 class TransactionReportGenerator {
 
     public List<Account> generateReport(List<Transaction> transactions) {
-        Map<String, Account> accountIdToAccount = new HashMap<>();
+        int estimatedInitialCapacity = Math.max((transactions.size()/10) + 1, 16);
+        Map<String, Account> accountIdToAccount = new HashMap<>(estimatedInitialCapacity);
 
-        // Naive implementation
         for (Transaction transaction : transactions) {
             Account debitAccount = accountIdToAccount.get(transaction.getDebitAccount());
-
             if (debitAccount != null) {
-                debitAccount.debitCount(debitAccount.getDebitCount() + 1);
-                debitAccount.balance(debitAccount.getBalance().subtract(transaction.getAmount()));
+                int debitCount = debitAccount.getDebitCount();
+                debitAccount.debitCount(++debitCount);
+                var newBalance = debitAccount.getBalance().subtract(transaction.getAmount());
+                debitAccount.balance(newBalance);
+
             } else {
                 debitAccount = createAccount(transaction.getDebitAccount(), 1, 0, transaction.getAmount().negate());
                 accountIdToAccount.put(transaction.getDebitAccount(), debitAccount);
             }
 
-
             Account creditAccount = accountIdToAccount.get(transaction.getCreditAccount());
             if (creditAccount != null) {
-                creditAccount.creditCount(creditAccount.getCreditCount() + 1);
-                creditAccount.balance(creditAccount.getBalance().add(transaction.getAmount()));
+                int creditCount = creditAccount.getCreditCount();
+                creditAccount.creditCount(++creditCount);
+                var newBalance = creditAccount.getBalance().add(transaction.getAmount());
+                creditAccount.balance(newBalance);
+
             } else {
                 creditAccount = createAccount(transaction.getCreditAccount(), 0, 1, transaction.getAmount());
                 accountIdToAccount.put(transaction.getCreditAccount(), creditAccount);
             }
         }
 
-        return accountIdToAccount.values().stream()
-                .sorted(Comparator.comparing(Account::getAccount))
-                .toList();
+        return sortByAccount(accountIdToAccount);
+    }
 
+    private static List<Account> sortByAccount(Map<String, Account> accountIdToAccount) {
+        Account[] accounts = accountIdToAccount.values().toArray(new Account[0]);
+        sort(accounts, Comparator.comparing(Account::getAccount));
+        return asList(accounts);
     }
 
     private static Account createAccount(String accountId, int debitCount, int creditCount, BigDecimal balance) {
