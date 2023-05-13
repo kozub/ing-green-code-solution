@@ -13,6 +13,22 @@ class OnlineGameCalculatorTest {
     private final OnlineGameCalculator calculator = new OnlineGameCalculator();
 
     @Test
+    void shouldProcessGroupsWithSingleItem() {
+        Clan firstClan = clan(8, 1);
+        Clan secondClan = clan(8, 3);
+        List<Clan> clans = List.of(firstClan, secondClan);
+        Players players = players(clans, 10);
+
+        List<List<Clan>> result = calculator.calculate(players);
+
+        assertEquals(2, result.size());
+        assertEquals(1, result.get(0).size());
+        assertEquals(List.of(firstClan), result.get(0));
+
+        assertEquals(1, result.get(1).size());
+        assertEquals(List.of(secondClan), result.get(1));
+    }
+    @Test
     void shouldSplitIntoTwoGroupsWithProvidedMaxNumOfPoints() {
         Clan firstClan = clan(8, 1);
         Clan secondClan = clan(6, 3);

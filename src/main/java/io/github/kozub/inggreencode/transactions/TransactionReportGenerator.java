@@ -1,19 +1,20 @@
 package io.github.kozub.inggreencode.transactions;
 
 
-
 import io.github.kozub.inggreencode.generated.model.Account;
 import io.github.kozub.inggreencode.generated.model.Transaction;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.math.BigDecimal;
-import java.util.*;
-
-import static java.util.Arrays.asList;
-import static java.util.Arrays.sort;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @ApplicationScoped
 class TransactionReportGenerator {
+
+    private static final Comparator<Account> SORT_BY_ACCOUNT = Comparator.comparing(Account::getAccount);
 
     public List<Account> generateReport(List<Transaction> transactions) {
         int estimatedInitialCapacity = Math.max((transactions.size()/10) + 1, 16);
@@ -49,9 +50,9 @@ class TransactionReportGenerator {
     }
 
     private static List<Account> sortByAccount(Map<String, Account> accountIdToAccount) {
-        Account[] accounts = accountIdToAccount.values().toArray(new Account[0]);
-        sort(accounts, Comparator.comparing(Account::getAccount));
-        return asList(accounts);
+        return accountIdToAccount.values()
+                .stream().sorted(SORT_BY_ACCOUNT)
+                .toList();
     }
 
     private static Account createAccount(String accountId, int debitCount, int creditCount, BigDecimal balance) {

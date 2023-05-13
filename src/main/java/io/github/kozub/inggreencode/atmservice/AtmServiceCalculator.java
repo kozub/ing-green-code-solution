@@ -16,29 +16,32 @@ import static java.util.stream.Collectors.groupingBy;
 
 @ApplicationScoped
 class AtmServiceCalculator {
+
+    private static final Comparator<ATM> SORT_BY_REGION = Comparator.comparing(ATM::getRegion);
+    private static final Comparator<Task> SORT_BY_PRIORITY = Comparator.comparingInt(AtmServiceCalculator::findPriority);
+
     public List<ATM> calculate(List<Task> tasks) {
         return tasks.stream()
                 .collect(groupingBy(Task::getRegion)).values().stream()
                 .flatMap(this::sortByPriorityAndRemoveDuplicates)
                 .map(AtmServiceCalculator::toATM)
-                .sorted(Comparator.comparing(ATM::getRegion))
+                .sorted(SORT_BY_REGION)
                 .toList();
     }
 
     private Stream<Task> sortByPriorityAndRemoveDuplicates(List<Task> tasksInRegion) {
         return tasksInRegion.stream()
-                .sorted((t1, t2) -> Integer.compare(findPriority(t1), findPriority(t2)))
+                .sorted(SORT_BY_PRIORITY)
                 .filter(distinctByKey(Task::getAtmId));
     }
 
     private static ATM toATM(Task task) {
-        ATM atm = new ATM();
-        atm.setAtmId(task.getAtmId());
-        atm.setRegion(task.getRegion());
-        return atm;
+        return new ATM()
+                .atmId(task.getAtmId())
+                .region(task.getRegion());
     }
 
-    private int findPriority(Task task) {
+    private static int findPriority(Task task) {
         return switch (task.getRequestType()) {
             case FAILURE_RESTART -> 1;
             case PRIORITY -> 2;
@@ -48,8 +51,7 @@ class AtmServiceCalculator {
         };
     }
 
-    public static <T> Predicate<T> distinctByKey(
-            Function<? super T, ?> keyExtractor) {
+    private static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
 
         Map<Object, Boolean> seen = new ConcurrentHashMap<>();
         return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
