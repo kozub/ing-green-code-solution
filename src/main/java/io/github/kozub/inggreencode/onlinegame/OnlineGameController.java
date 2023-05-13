@@ -3,6 +3,7 @@ package io.github.kozub.inggreencode.onlinegame;
 import io.github.kozub.inggreencode.generated.api.OnlineGameApi;
 import io.github.kozub.inggreencode.generated.model.Clan;
 import io.github.kozub.inggreencode.generated.model.Players;
+import io.quarkus.cache.CacheResult;
 import jakarta.inject.Inject;
 
 import java.util.List;
@@ -18,6 +19,7 @@ class OnlineGameController implements OnlineGameApi {
     }
 
     @Override
+    @CacheResult(cacheName = "onlinegame-cache")
     public List<List<Clan>> calculate(Players players) {
         return calculator.calculate(players);
     }

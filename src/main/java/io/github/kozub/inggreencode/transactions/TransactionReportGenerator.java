@@ -3,6 +3,7 @@ package io.github.kozub.inggreencode.transactions;
 
 import io.github.kozub.inggreencode.generated.model.Account;
 import io.github.kozub.inggreencode.generated.model.Transaction;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.math.BigDecimal;
@@ -16,8 +17,10 @@ class TransactionReportGenerator {
 
     private static final Comparator<Account> SORT_BY_ACCOUNT = Comparator.comparing(Account::getAccount);
 
+
+    @CacheResult(cacheName = "transactions-cache", keyGenerator = TransactionCacheKeyGenerator.class)
     public List<Account> generateReport(List<Transaction> transactions) {
-        int estimatedInitialCapacity = Math.max((transactions.size()/10) + 1, 16);
+        int estimatedInitialCapacity = calculateEstimatedCapacity(transactions);
         Map<String, Account> accountIdToAccount = new HashMap<>(estimatedInitialCapacity);
 
         for (Transaction transaction : transactions) {
@@ -47,6 +50,11 @@ class TransactionReportGenerator {
         }
 
         return sortByAccount(accountIdToAccount);
+    }
+
+    private static int calculateEstimatedCapacity(List<Transaction> transactions) {
+        int estimatedInitialCapacity = Math.max((transactions.size()/10) + 1, 16);
+        return estimatedInitialCapacity;
     }
 
     private static List<Account> sortByAccount(Map<String, Account> accountIdToAccount) {

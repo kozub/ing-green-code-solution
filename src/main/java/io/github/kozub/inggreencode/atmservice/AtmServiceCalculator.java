@@ -2,6 +2,7 @@ package io.github.kozub.inggreencode.atmservice;
 
 import io.github.kozub.inggreencode.generated.model.ATM;
 import io.github.kozub.inggreencode.generated.model.Task;
+import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.Comparator;
@@ -20,6 +21,7 @@ class AtmServiceCalculator {
     private static final Comparator<ATM> SORT_BY_REGION = Comparator.comparing(ATM::getRegion);
     private static final Comparator<Task> SORT_BY_PRIORITY = Comparator.comparingInt(AtmServiceCalculator::findPriority);
 
+    @CacheResult(cacheName = "atmservice-cache", keyGenerator = AtmServiceCacheKeyGenerator.class)
     public List<ATM> calculate(List<Task> tasks) {
         return tasks.stream()
                 .collect(groupingBy(Task::getRegion)).values().stream()
