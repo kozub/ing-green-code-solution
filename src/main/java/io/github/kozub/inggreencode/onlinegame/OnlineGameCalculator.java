@@ -16,8 +16,12 @@ public class OnlineGameCalculator {
 
     private static final Comparator<Clan> SORT_BY_POINTS_AND_NUMBER_OF_PLAYERS = (c1, c2) -> {
         int pointsCompare = compare(c2.getPoints(), c1.getPoints());
-        return pointsCompare != 0 ? pointsCompare : compare(c1.getNumberOfPlayers(), c2.getNumberOfPlayers());
-    };
+
+        if (pointsCompare != 0) {
+            return pointsCompare;
+        } else {
+            return compare(c1.getNumberOfPlayers(), c2.getNumberOfPlayers());
+        }};
 
     @CacheResult(cacheName = "onlinegame-cache", keyGenerator = OnlineGameCacheKeyGenerator.class)
     public List<List<Clan>> calculate(Players players) {
