@@ -1,10 +1,8 @@
 package io.github.kozub.inggreencode.onlinegame;
 
 
-
 import io.github.kozub.inggreencode.generated.model.Clan;
 import io.github.kozub.inggreencode.generated.model.Players;
-import io.quarkus.cache.CacheResult;
 import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.*;
@@ -23,7 +21,6 @@ public class OnlineGameCalculator {
             return compare(c1.getNumberOfPlayers(), c2.getNumberOfPlayers());
         }};
 
-    @CacheResult(cacheName = "onlinegame-cache", keyGenerator = OnlineGameCacheKeyGenerator.class)
     public List<List<Clan>> calculate(Players players) {
         return splitGroups(players.getGroupCount(), players.getClans());
     }
