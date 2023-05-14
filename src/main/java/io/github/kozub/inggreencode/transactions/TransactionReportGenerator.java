@@ -51,8 +51,7 @@ class TransactionReportGenerator {
     }
 
     private static int calculateEstimatedCapacity(List<Transaction> transactions) {
-        int estimatedInitialCapacity = Math.max((transactions.size()/10) + 1, 16);
-        return estimatedInitialCapacity;
+        return Math.max((transactions.size()/10) + 1, 16);
     }
 
     private static List<Account> sortByAccount(Map<String, Account> accountIdToAccount) {
