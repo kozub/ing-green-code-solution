@@ -3,16 +3,19 @@ quarkus:
     codegen:
       spec:
         transactions_json:
+          return-response: true
           base-package: io.github.kozub.inggreencode.generated
           type-mappings:
             Float: java.math.BigDecimal
             Integer: int
         atmservice_json:
+          return-response: true
           base-package: io.github.kozub.inggreencode.generated
           type-mappings:
             Float: java.math.BigDecimal
             Integer: int
         onlinegame_json:
+          return-response: true
           base-package: io.github.kozub.inggreencode.generated
           type-mappings:
             Float: java.math.BigDecimal
