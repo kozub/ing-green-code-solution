@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 
 import java.util.List;
 
-public class AtmServiceController implements AtmServiceApi {
+class AtmServiceController implements AtmServiceApi {
 
     AtmServiceCalculator calculator;
 

@@ -11,7 +11,6 @@ class OnlineGameController implements OnlineGameApi {
 
     OnlineGameCalculator calculator;
 
-
     @Inject
     public OnlineGameController(OnlineGameCalculator calculator) {
         this.calculator = calculator;

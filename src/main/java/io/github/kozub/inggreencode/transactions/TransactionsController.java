@@ -7,7 +7,7 @@ import jakarta.inject.Inject;
 
 import java.util.List;
 
-public class TransactionsController implements TransactionApi {
+class TransactionsController implements TransactionApi {
 
     @Inject
     TransactionReportGenerator reportProvider;

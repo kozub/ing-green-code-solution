@@ -10,7 +10,7 @@ import java.util.*;
 import static java.lang.Integer.compare;
 
 @ApplicationScoped
-public class OnlineGameCalculator {
+class OnlineGameCalculator {
 
     private static final Comparator<Clan> SORT_BY_POINTS_AND_NUMBER_OF_PLAYERS = (c1, c2) -> {
         int pointsCompare = compare(c2.getPoints(), c1.getPoints());
@@ -19,7 +19,8 @@ public class OnlineGameCalculator {
             return pointsCompare;
         } else {
             return compare(c1.getNumberOfPlayers(), c2.getNumberOfPlayers());
-        }};
+        }
+    };
 
     public List<List<Clan>> calculate(Players players) {
         return splitGroups(players.getGroupCount(), players.getClans());
@@ -69,7 +70,7 @@ public class OnlineGameCalculator {
         return result;
     }
 
-    private static boolean clanFitsToCurrentGroup( Clan clan, Integer groupCount, int currentGroupCount) {
+    private static boolean clanFitsToCurrentGroup(Clan clan, Integer groupCount, int currentGroupCount) {
         return (clan.getNumberOfPlayers() + currentGroupCount) <= groupCount;
     }
 
