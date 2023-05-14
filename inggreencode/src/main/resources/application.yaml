@@ -1,0 +1,22 @@
+quarkus:
+  openapi-generator:
+    codegen:
+      spec:
+        transactions_json:
+          base-package: io.github.kozub.inggreencode.generated
+          type-mappings:
+            Float: java.math.BigDecimal
+            Integer: int
+        atmservice_json:
+          base-package: io.github.kozub.inggreencode.generated
+          type-mappings:
+            Float: java.math.BigDecimal
+            Integer: int
+        onlinegame_json:
+          base-package: io.github.kozub.inggreencode.generated
+          type-mappings:
+            Float: java.math.BigDecimal
+            Integer: int
+  http:
+    limits:
+      max-body-size: 20M

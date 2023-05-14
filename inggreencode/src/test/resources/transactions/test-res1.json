@@ -1,0 +1,86 @@
+[
+    {
+        "account": "06105023389842834748547000",
+        "debitCount": 0,
+        "creditCount": 2,
+        "balance": 7678.96
+    },
+    {
+        "account": "06105023389842834748547001",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 1777.51
+    },
+    {
+        "account": "06105023389842834748547002",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 5901.98
+    },
+    {
+        "account": "06105023389842834748547003",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 2362.28
+    },
+    {
+        "account": "06105023389842834748547004",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 7247.67
+    },
+    {
+        "account": "06105023389842834748547005",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 4678.64
+    },
+    {
+        "account": "06105023389842834748547008",
+        "debitCount": 0,
+        "creditCount": 2,
+        "balance": 15764.05
+    },
+    {
+        "account": "06105023389842834748547009",
+        "debitCount": 0,
+        "creditCount": 1,
+        "balance": 3117.4
+    },
+    {
+        "account": "32309111922661937852684002",
+        "debitCount": 2,
+        "creditCount": 0,
+        "balance": -7570.10
+    },
+    {
+        "account": "32309111922661937852684003",
+        "debitCount": 1,
+        "creditCount": 0,
+        "balance": -2362.28
+    },
+    {
+        "account": "32309111922661937852684004",
+        "debitCount": 4,
+        "creditCount": 0,
+        "balance": -23560.09
+    },
+    {
+        "account": "32309111922661937852684007",
+        "debitCount": 1,
+        "creditCount": 0,
+        "balance": -7247.67
+    },
+    {
+        "account": "32309111922661937852684008",
+        "debitCount": 1,
+        "creditCount": 0,
+        "balance": -1777.51
+    },
+    {
+        "account": "32309111922661937852684009",
+        "debitCount": 1,
+        "creditCount": 0,
+        "balance": -6010.84
+    }
+]
